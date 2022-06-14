@@ -37,11 +37,11 @@ export class User {
     mobile: string;
 
     @Prop({
-        type: Number,
+        type: [String],
         required: true,
-        default: 1,
+        default: ["Client"],
     })
-    role: number;
+    role: [String];
 
     @Prop({
         required: true,

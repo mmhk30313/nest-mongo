@@ -16,10 +16,11 @@ export class CreateUserDto {
     @IsString()
     mobile: string;
 
-    @ApiProperty({ required: true, example: "1" })
+    // @ApiProperty({ required: true, example: "1" })
+    @IsOptional()
     @IsNumber()
     @IsNotEmpty()
-    role: number;
+    role: string[];
     
     @ApiProperty({required: true})
     @IsString()
@@ -31,7 +32,7 @@ export class CreateUserDto {
     @IsOptional()
     age: number;
     
-    @ApiPropertyOptional()
+    @ApiProperty({required: false, example: "avatar.png"})
     @IsString()
     @IsOptional()
     avatar: string;
