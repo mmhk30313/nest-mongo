@@ -51,6 +51,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @ApiTags("CRUD-OPERATION-IN-USER")
   @Get(':id')
+  @ApiOperation({summary: "Find User", description: "Find A User By His/Her Id"})
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
@@ -58,9 +59,15 @@ export class UsersController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiTags("CRUD-OPERATION-IN-USER")
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Patch('update')
+  @ApiOperation({summary: "Update User", description: "Update User By His/Her Id From Token"})
+  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(@Req() req: any, @Body() updateUserDto: UpdateUserDto) {
+    const {user} = req?.user
+    const { id } = user;
+    console.log({id});
+    
+    return this.usersService.update(id, updateUserDto);
   }
   
   @ApiBearerAuth()
@@ -68,6 +75,7 @@ export class UsersController {
   @Roles(Role.Admin)
   @ApiTags("CRUD-OPERATION-IN-USER")
   @Delete(':id')
+  @ApiOperation({summary: "Delete User", description: "Delete User By His/Her Id From Token"})
   remove(@Param('id') id: string, @Req() req: any) {
     // console.log("user ======> ", req.user);
     const {user} = req?.user

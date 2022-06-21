@@ -9,7 +9,10 @@ import { AdminUpdateUserDto } from './dto/admin-update-user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+
+  ) {}
   
   async create(user: CreateUserDto) {
     try {
@@ -41,19 +44,19 @@ export class UsersService {
   }
 
   async findAll() {
-    return await this.userModel.find({});
+    return await this.userModel.find({}).select('-password');
   }
 
   async findOne(id: string) {
-    return await this.userModel.findById(id);
+    return await this.userModel.findById(id).select('-password');
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    return this.userModel.findByIdAndUpdate(id, updateUserDto);
+    return this.userModel.findByIdAndUpdate(id, updateUserDto).select('-password');
   }
 
   async remove(id: string) {
-    const user = await this.userModel.findById(id);
+    const user = await this.userModel.findById(id).select('-password');
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }

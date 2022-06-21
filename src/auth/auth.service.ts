@@ -9,7 +9,7 @@ import { AuthLoginDto } from './dto/auth.dto';
 export class AuthService {
   constructor( 
     private readonly usersService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
       
   ) {}
 
